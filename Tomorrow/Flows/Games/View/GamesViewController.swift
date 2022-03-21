@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class AricleViewController: UIViewController {
+final class GamesViewController: UIViewController, InputGameViewController {
+
+    //MARK: - Properties
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -19,7 +21,6 @@ final class AricleViewController: UIViewController {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .title
-        titleLabel.textColor = .black
         titleLabel.numberOfLines = 0
         return titleLabel
     }()
@@ -28,7 +29,7 @@ final class AricleViewController: UIViewController {
         let subTitleLabel = UILabel()
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subTitleLabel.font = .subTitle
-        subTitleLabel.textColor = .lightGray
+        subTitleLabel.numberOfLines = 1
         return subTitleLabel
 
     }()
@@ -37,7 +38,7 @@ final class AricleViewController: UIViewController {
         let categoryLabel = UILabel()
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         categoryLabel.font = .subTitle
-        categoryLabel.textColor = .lightGray
+        categoryLabel.numberOfLines = 1
         return categoryLabel
     }()
 
@@ -46,7 +47,7 @@ final class AricleViewController: UIViewController {
         propsView.translatesAutoresizingMaskIntoConstraints = false
         propsView.layer.cornerRadius = 25
         propsView.layer.masksToBounds = true
-        propsView.backgroundColor = .systemGray6
+        propsView.backgroundColor = .systemGray4
         return propsView
     }()
 
@@ -54,7 +55,6 @@ final class AricleViewController: UIViewController {
         let propsLabel = UILabel()
         propsLabel.translatesAutoresizingMaskIntoConstraints = false
         propsLabel.font = .subTitle
-        propsLabel.textColor = .lightGray
         propsLabel.text = "Понадобится:"
         return propsLabel
     }()
@@ -62,8 +62,7 @@ final class AricleViewController: UIViewController {
     private lazy var propsTextLabel: UILabel = {
         let propsTextLabel = UILabel()
         propsTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        propsTextLabel.font = .subTitle
-        propsTextLabel.textColor = .black
+        propsTextLabel.font = .titleTabelViewCell
         propsTextLabel.numberOfLines = 0
         return propsTextLabel
     }()
@@ -71,17 +70,33 @@ final class AricleViewController: UIViewController {
     private lazy var textLabel: UILabel = {
         let textLabel = UILabel()
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.numberOfLines = 0
         textLabel.font = .mainText
-        textLabel.textColor = .black
+        textLabel.numberOfLines = 0
         return textLabel
     }()
+
+    var presenter: OutputGameViewController
+
+    //MARK: - LifeCicle
+
+    init(presenter: OutputGameViewController) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureUI()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fillData()
     }
 
     //MARK: - UI
@@ -98,6 +113,8 @@ final class AricleViewController: UIViewController {
 
         configureConstraints()
     }
+
+    //MARK: - Constreints
 
     private func configureConstraints() {
         let safeArea = self.view.safeAreaLayoutGuide
@@ -169,9 +186,34 @@ final class AricleViewController: UIViewController {
 
     //MARK: - Private
 
-    private func checkFilledData() {
+    private func hidePropsView() {
+        propsLabel.removeFromSuperview()
+        propsTextLabel.removeFromSuperview()
+        propsView.removeFromSuperview()
 
+        NSLayoutConstraint.activate([
+            textLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: Constants.offsetOtherSubject.y)
+        ])
     }
 
+    //MARK: - Fill data
 
+    func fillData() {
+        let game = presenter.article
+        titleLabel.text = game.title
+        categoryLabel.text = game.categoryDescription.description()
+        textLabel.text = game.text
+
+        if game.subtitle == nil {
+            subTitleLabel.text = game.categoryDescription.addSubTitle()
+        } else {
+            subTitleLabel.text = game.subtitle
+        }
+
+        if game.props == nil {
+            hidePropsView()
+        } else {
+            propsTextLabel.text = game.props
+        }
+    }
 }

@@ -7,8 +7,9 @@
 
 import Foundation
 
-enum Note: ArticleCategory {
+enum Note {
     case reading, song, legends, diagnostic, teamBuilding
+
     func description() -> String {
         switch self {
         case .reading:
