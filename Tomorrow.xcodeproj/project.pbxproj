@@ -534,6 +534,7 @@
 			files = (
 				7469712827D908D0007E94E6 /* LaunchScreen.storyboard in Resources */,
 				7469712527D908D0007E94E6 /* Assets.xcassets in Resources */,
+				746BDFA12806B49C007ED332 /* Articles.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
