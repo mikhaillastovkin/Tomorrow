@@ -14,6 +14,7 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
 
@@ -21,13 +22,15 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
         let gameLabel = UILabel()
         gameLabel.translatesAutoresizingMaskIntoConstraints = false
         gameLabel.font = UIFont.maimMenuTitleLable
-        gameLabel.text = "ИГРЫ"
+        gameLabel.text = "Игры"
+        gameLabel.textColor = .titleColor
         return gameLabel
     }()
 
     lazy private var allGamesButton: UIButton = {
         let button = AllArticleMainMenuButton(color: .systemGray2)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(pressAllGames), for: .touchUpInside)
         return button
     }()
 
@@ -35,29 +38,48 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
         let readingLabel = UILabel()
         readingLabel.translatesAutoresizingMaskIntoConstraints = false
         readingLabel.font = UIFont.maimMenuTitleLable
-        readingLabel.text = "ЧТИВО"
+        readingLabel.text = "Чтиво"
+        readingLabel.textColor = .titleColor
         return readingLabel
-    }()
-
-    lazy private var allReadingButton: UIButton = {
-        let button = AllArticleMainMenuButton(color: .systemGray2)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }()
 
     lazy private var gameCollectionView: UICollectionView = {
         let gameCollectionView = HorizontalCollectionMainMenu(backgroungColor: .systemBackground)
+        gameCollectionView.dataSource = self
+        gameCollectionView.delegate = self
+        gameCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.cellIdentifire)
         return gameCollectionView
     }()
 
     lazy private var readingCollectionView: UICollectionView = {
-        let readingCollectionView = HorizontalCollectionMainMenu(backgroungColor: .green)
+        let readingCollectionView = HorizontalCollectionMainMenu(backgroungColor: .systemBackground)
+        readingCollectionView.dataSource = self
+        readingCollectionView.delegate = self
+        readingCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.cellIdentifire)
         return readingCollectionView
+    }()
+
+    lazy private var otherLabel: UILabel = {
+        let otherLabel = UILabel()
+        otherLabel.translatesAutoresizingMaskIntoConstraints = false
+        otherLabel.font = UIFont.maimMenuTitleLable
+        otherLabel.text = "Пригодится"
+        otherLabel.textColor = .titleColor
+        otherLabel.font = UIFont.maimMenuTitleLable
+        return otherLabel
+    }()
+
+    lazy private var otherCollectionView: UICollectionView = {
+        let otherCollectionView = VerticalCollectionMainMenu(backgroungColor: .systemBackground)
+        otherCollectionView.dataSource = self
+        otherCollectionView.delegate = self
+        otherCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.cellIdentifire)
+        return otherCollectionView
     }()
 
     var presenter: OutputMainMenu
 
-    //MARK: - Life circle
+    //MARK: - Life cicle
 
     init(presenter: OutputMainMenu) {
         self.presenter = presenter
@@ -71,20 +93,25 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupGamesCollectionView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     //MARK: - UI
 
     private func setupUI() {
+        self.view.backgroundColor = .systemBackground
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(gameLabel)
         self.scrollView.addSubview(allGamesButton)
         self.scrollView.addSubview(gameCollectionView)
         self.scrollView.addSubview(readingLabel)
-        self.scrollView.addSubview(allReadingButton)
         self.scrollView.addSubview(readingCollectionView)
-        self.view.backgroundColor = .systemBackground
+        self.scrollView.addSubview(otherLabel)
+        self.scrollView.addSubview(otherCollectionView)
         setupConstreints()
     }
 
@@ -107,42 +134,42 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
             scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
 
             gameLabel.topAnchor.constraint(equalTo: scrollViewContent.topAnchor, constant: superOffsetY),
-            gameLabel.leftAnchor.constraint(equalTo: scrollViewContent.leftAnchor, constant: superOffsetX),
+            gameLabel.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: superOffsetX),
 
             allGamesButton.centerYAnchor.constraint(equalTo: gameLabel.centerYAnchor),
             allGamesButton.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: -superOffsetX),
             allGamesButton.leftAnchor.constraint(greaterThanOrEqualTo: gameLabel.rightAnchor, constant: offsetX),
             allGamesButton.heightAnchor.constraint(equalTo: gameLabel.heightAnchor),
+            allGamesButton.widthAnchor.constraint(equalTo: allGamesButton.heightAnchor),
 
             gameCollectionView.topAnchor.constraint(equalTo: gameLabel.bottomAnchor, constant: offsetY),
-            gameCollectionView.leftAnchor.constraint(equalTo: scrollViewContent.leftAnchor, constant: 0),
-            gameCollectionView.rightAnchor.constraint(equalTo: scrollViewContent.rightAnchor, constant: 0),
-            gameCollectionView.heightAnchor.constraint(equalToConstant: (safeArea.layoutFrame.height / 5).rounded()),
-            gameCollectionView.widthAnchor.constraint(equalToConstant: view.bounds.width),
+            gameCollectionView.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: 0),
+            gameCollectionView.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: 0),
+            gameCollectionView.heightAnchor.constraint(equalToConstant: (view.bounds.width / 2.5)),
 
             readingLabel.topAnchor.constraint(equalTo: gameCollectionView.bottomAnchor, constant: offsetY),
-            readingLabel.leftAnchor.constraint(equalTo: scrollViewContent.leftAnchor, constant: superOffsetX),
-
-            allReadingButton.centerYAnchor.constraint(equalTo: readingLabel.centerYAnchor),
-            allReadingButton.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: -superOffsetX),
-            allReadingButton.leftAnchor.constraint(greaterThanOrEqualTo: readingLabel.rightAnchor, constant: offsetX),
-            allReadingButton.heightAnchor.constraint(equalTo: readingLabel.heightAnchor),
-
+            readingLabel.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: superOffsetX),
 
             readingCollectionView.topAnchor.constraint(equalTo: readingLabel.bottomAnchor, constant: offsetY),
-            readingCollectionView.leftAnchor.constraint(equalTo: scrollViewContent.leftAnchor, constant: 0),
-            readingCollectionView.rightAnchor.constraint(equalTo: scrollViewContent.rightAnchor, constant: 0),
+            readingCollectionView.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: 0),
+            readingCollectionView.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: 0),
             readingCollectionView.heightAnchor.constraint(equalTo: gameCollectionView.heightAnchor),
-            readingCollectionView.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor, constant: -superOffsetY)
+
+            otherLabel.topAnchor.constraint(equalTo: readingCollectionView.bottomAnchor, constant: offsetY),
+            otherLabel.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: superOffsetX),
+
+            otherCollectionView.topAnchor.constraint(equalTo: otherLabel.bottomAnchor, constant: offsetY),
+            otherCollectionView.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: 0),
+            otherCollectionView.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: 0),
+            otherCollectionView.heightAnchor.constraint(equalToConstant: (view.bounds.width / 2.5) * CGFloat(presenter.items.other.count) + (offsetX * (CGFloat(presenter.items.other.count)))),
+            otherCollectionView.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor, constant: -superOffsetY)
         ])
     }
 
-    //MARK: - Private
+    //MARK: - Navigation
 
-    private func setupGamesCollectionView() {
-        gameCollectionView.dataSource = self
-        gameCollectionView.delegate = self
-        gameCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.cellIdentifire)
+    @objc private func pressAllGames() {
+        presenter.pressAllGamesButton()
     }
 }
 
@@ -154,27 +181,44 @@ extension MainMenuViewController: UICollectionViewDataSource {
         case gameCollectionView:
             return presenter.items.games.count
         case readingCollectionView:
-            return presenter.items.reading?.count ?? 0
+            return presenter.items.reading.count
+        case otherCollectionView:
+            return presenter.items.other.count
         default:
             return 0
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.cellIdentifire, for: indexPath) as? MainCollectionViewCell
+        else { return UICollectionViewCell() }
+
         switch collectionView {
 
         case gameCollectionView:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.cellIdentifire, for: indexPath) as? MainCollectionViewCell
-            else {
-                return UICollectionViewCell()
-            }
-            let item = presenter.items.games[indexPath.row]
-
-            
+            let item = presenter.items.games[indexPath.item]
             cell.configure(
-                image: UIImage(named: item.imageName),
+                imageCattegory: UIImage(named: item.imageName),
                 title: item.title,
-                subtitle: item.title)
+                subtitle: item.subTitle,
+                indexItem: indexPath.item)
+            return cell
+
+        case readingCollectionView:
+            let item = presenter.items.reading[indexPath.item]
+            cell.configure(
+                imageBackground: UIImage(named: item.imageName),
+                title: item.title,
+                subtitle: item.subTitle)
+            return cell
+
+        case otherCollectionView:
+            let item = presenter.items.other[indexPath.item]
+            cell.configure(
+                imageBackground: UIImage(named: item.imageName),
+                title: item.title,
+                subtitle: item.subTitle)
             return cell
 
         default:
@@ -183,13 +227,44 @@ extension MainMenuViewController: UICollectionViewDataSource {
     }
 }
 
-//MARK: - CollectionView DataSourse
+//MARK: - CollectionView Delegate
+
+extension MainMenuViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch collectionView {
+        case gameCollectionView:
+            presenter.selectCategory(presenter.items.games[indexPath.row])
+        case readingCollectionView:
+            presenter.selectCategory(presenter.items.reading[indexPath.row])
+        case otherCollectionView:
+            presenter.selectCategory(presenter.items.other[indexPath.row])
+        default:
+            break
+        }
+    }
+}
+
+//MARK: - CollectionView DelegateFlowLayout
 extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+
+        switch collectionView {
+
+        case gameCollectionView, readingCollectionView:
+            let wight = (collectionView.bounds.width / 2.5).rounded()
+            let height = collectionView.bounds.height
+            return CGSize(width: wight, height: height)
+
+        case otherCollectionView:
+
+            let wight = (collectionView.bounds.width - Constants.offsetSuperView.x * 2)
+            let height = gameCollectionView.bounds.height
+            return CGSize(width: wight, height: height)
+
+        default:
+            return CGSize.zero
+        }
     }
-
 }
-
-

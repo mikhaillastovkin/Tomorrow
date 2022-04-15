@@ -11,11 +11,18 @@ final class MainCollectionViewCell: UICollectionViewCell {
 
     //MARK: - Properties
 
+    lazy private var mainImageView: UIImageView = {
+        let mainImageView = UIImageView()
+        mainImageView.layer.cornerRadius = Constants.corenerRadius
+        mainImageView.contentMode = .scaleAspectFill
+        mainImageView.layer.masksToBounds = true
+        mainImageView.translatesAutoresizingMaskIntoConstraints = false
+        return mainImageView
+    }()
+
     lazy private var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = Constants.corenerRadius
-        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -24,8 +31,10 @@ final class MainCollectionViewCell: UICollectionViewCell {
         let titleLabel = UILabel()
         titleLabel.font = UIFont.mainMenuItemTitleLabel
         titleLabel.textColor = .white
-        titleLabel.numberOfLines = 3
+        titleLabel.isHighlighted = true
+        titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.setShadow(opacity: 0.6)
         return titleLabel
     }()
 
@@ -33,8 +42,9 @@ final class MainCollectionViewCell: UICollectionViewCell {
         let subtitleLable = UILabel()
         subtitleLable.font = UIFont.mainMenuItemSubtitleLabel
         subtitleLable.textColor = .white
-        subtitleLable.numberOfLines = 2
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLable.numberOfLines = 0
+        subtitleLable.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLable.setShadow(opacity: 0.8)
         return subtitleLable
     }()
 
@@ -42,8 +52,8 @@ final class MainCollectionViewCell: UICollectionViewCell {
 
     //MARK: - Life circle
 
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setupUI()
     }
 
@@ -52,8 +62,12 @@ final class MainCollectionViewCell: UICollectionViewCell {
         clearCell()
     }
 
+
     //MARK: - UI
+    
     private func setupUI(){
+        contentView.layer.masksToBounds = true
+        contentView.addSubview(mainImageView)
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(subtitleLable)
@@ -66,24 +80,29 @@ final class MainCollectionViewCell: UICollectionViewCell {
         let offsetX = Constants.offsetOtherSubject.x
         let offsetY = Constants.offsetOtherSubject.y
 
-
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            imageView.leftAnchor.constraint(equalTo: safeArea.leftAnchor),
-            imageView.rightAnchor.constraint(equalTo: safeArea.rightAnchor),
-            imageView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+
+            mainImageView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            mainImageView.leftAnchor.constraint(equalTo: safeArea.leftAnchor),
+            mainImageView.rightAnchor.constraint(equalTo: safeArea.rightAnchor),
+            mainImageView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
 
             titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: offsetX),
             titleLabel.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: offsetY),
             titleLabel.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: -offsetX),
-
+//
             subtitleLable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: (offsetY / 4).rounded()),
             subtitleLable.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
-            subtitleLable.rightAnchor.constraint(equalTo: titleLabel.rightAnchor)
+            subtitleLable.rightAnchor.constraint(equalTo: titleLabel.rightAnchor),
+
+            imageView.heightAnchor.constraint(equalToConstant: 60),
+            imageView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0),
+            imageView.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: -offsetX)
         ])
+
     }
 
-    //MARK: - Private
+    //MARK: - Clear reusable cell
 
     private func clearCell() {
         imageView.image = nil
@@ -93,9 +112,24 @@ final class MainCollectionViewCell: UICollectionViewCell {
 
     //MARK: - Configure Cell
 
-    func configure(image: UIImage?, title: String, subtitle: String) {
-        setupUI()
-        self.imageView.image = image
+    func configure(imageCattegory: UIImage?, title: String, subtitle: String, indexItem: Int) {
+        self.imageView.image = imageCattegory
+        self.titleLabel.text = title
+        self.subtitleLable.text = subtitle
+
+        switch indexItem {
+        case 0...1:
+            mainImageView.backgroundColor = .green1
+        case 2...4:
+            mainImageView.backgroundColor = .green2
+        default:
+            mainImageView.backgroundColor = .green3
+        }
+    }
+
+    func configure(imageBackground: UIImage?, title: String, subtitle: String) {
+        self.imageView.isHidden = true
+        mainImageView.image = imageBackground
         self.titleLabel.text = title
         self.subtitleLable.text = subtitle
     }

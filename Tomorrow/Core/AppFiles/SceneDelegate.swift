@@ -14,18 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-
-        var curentGames = [Game]()
-        
-        let load = LoadDataSevice()
-        load.loadData { game in
-            curentGames = game.sorted(by: { $0.title < $1.title })
-        }
-
-        let vc = TableViewBuilder.buildTableView(with: curentGames)
-        let navController = UINavigationController(rootViewController: vc)
-
-        window?.rootViewController = navController
+        let loadAppManager = LoadAppManager()
+        window?.rootViewController = loadAppManager.start()
         window?.makeKeyAndVisible()
     }
 
@@ -33,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
+
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

@@ -20,7 +20,7 @@ final class TableViewCell: UITableViewCell {
 
     lazy private var titleLable: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.numberOfLines = 1
+        titleLabel.numberOfLines = 3
         titleLabel.font = UIFont.titleTabelViewCell
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
@@ -37,10 +37,10 @@ final class TableViewCell: UITableViewCell {
 
     static let cellIdentifire = "TableViewCell"
 
-    //MARK: Life circle
-
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
+    //MARK: Life cicle
+    
+    override func layoutSubviews () {
+        super.layoutSubviews()
         configureUI()
     }
 
@@ -63,7 +63,7 @@ final class TableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             image.widthAnchor.constraint(equalToConstant: 60),
             image.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: Constants.offsetSuperView.y / 2),
-            image.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: Constants.offsetSuperView.x),
+            image.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: Constants.offsetOtherSubject.x),
             image.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -Constants.offsetSuperView.y / 2),
 
             titleLable.leftAnchor.constraint(equalTo: image.rightAnchor, constant: Constants.offsetOtherSubject.x),
@@ -76,7 +76,7 @@ final class TableViewCell: UITableViewCell {
         ])
     }
 
-    //MARK: - Private
+    //MARK: - Clear cell before reuse
 
     private func clearCell() {
         image.image = nil
@@ -86,9 +86,16 @@ final class TableViewCell: UITableViewCell {
 
     //MARK: - Configure Cell
 
-    func configure(image: UIImage?, title: String, subtitle: String?) {
-        self.image.image = image
+    func configure(image: String?, title: String?, subtitle: String?, indexPath: IndexPath) {
+        let imageBuilder = ImageBuilder()
+        self.image.image = imageBuilder.imageBuild(name: image)
         self.titleLable.text = title
         self.subtitleLabel.text = subtitle
+
+        if indexPath.row % 2 == 0 {
+            self.image.tintColor = UIColor.green1
+        } else {
+            self.image.tintColor = UIColor.green2
+        }
     }
 }
