@@ -23,6 +23,7 @@ class TableViewController: UIViewController, InputTableView {
     lazy private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.keyboardDismissMode = .onDrag
         return tableView
     }()
 
@@ -43,17 +44,30 @@ class TableViewController: UIViewController, InputTableView {
         super.viewDidLoad()
         setupTableView()
         setupSearchBar()
-        configureUI()
+        presenter.loadArticles(filter: presenter.category)
     }
 
-    //MARK: - UI
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureUI()
+        presenter.loadArticles(filter: presenter.category)
+        tableView.reloadData()
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
+
+    //MARK: - Private
+    //MARK: UI
 
     private func configureUI() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(searchBar)
         self.view.addSubview(tableView)
         setupConstraints()
     }
+
+    //MARK: Constraints
 
     private func setupConstraints() {
         let safeArea = self.view.safeAreaLayoutGuide
@@ -69,7 +83,7 @@ class TableViewController: UIViewController, InputTableView {
         ])
     }
 
-    //MARK: - Private
+    //MARK: Setup properties delegates
 
     private func setupTableView() {
         self.tableView.dataSource = self
@@ -80,18 +94,6 @@ class TableViewController: UIViewController, InputTableView {
     private func setupSearchBar() {
         self.searchBar.delegate = self
     }
-
-    private func addTableViewTapGestureRecognizers() {
-        let tapGR = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        tableView.addGestureRecognizer(tapGR)
-    }
-
-    @objc func hideKeyboard() {
-        guard let tapGR = tableView.gestureRecognizers?.last as? UITapGestureRecognizer
-        else { return }
-        tableView.removeGestureRecognizer(tapGR)
-        searchBar.resignFirstResponder()
-    }
 }
 
 //MARK: - TableView DataSourde
@@ -99,19 +101,18 @@ class TableViewController: UIViewController, InputTableView {
 extension TableViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.searchResult.count
+        presenter.searchResult?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.cellIdentifire, for: indexPath) as? TableViewCell
         else { return UITableViewCell() }
 
-        let article = presenter.searchResult[indexPath.row]
-        let image = UIImage(named: article.imageName)
-        let title = article.title
-        let subtitle = article.subtitle
+        let article = presenter.searchResult?[indexPath.row]
+        let title = article?.title
+        let subtitle = article?.subtitle
 
-        cell.configure(image: image, title: title, subtitle: subtitle)
+        cell.configure(image: article?.imgName, title: title, subtitle: subtitle, indexPath: indexPath)
 
         return cell
     }
@@ -122,7 +123,7 @@ extension TableViewController: UITableViewDataSource {
 extension TableViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        80
+        return (view.frame.height / 10)
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -133,11 +134,6 @@ extension TableViewController: UITableViewDelegate {
 //MARK: - SearchBar Delegate
 
 extension TableViewController: UISearchBarDelegate {
-
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        addTableViewTapGestureRecognizers()
-        return true
-    }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()

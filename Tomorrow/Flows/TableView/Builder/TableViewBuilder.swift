@@ -9,10 +9,12 @@ import UIKit
 
 final class TableViewBuilder {
 
-    static func buildTableView(with articles: [Article]) -> (UIViewController & InputTableView) {
-        let presenter = TableViewPresenter(articles: articles)
+    func buildTableView(with category: ArticleCategory) -> (TableViewController) {
+
+        let presenter = TableViewPresenter(articleCategory: category)
         let viewController = TableViewController(presenter: presenter)
         presenter.viewInput = viewController
+
         return viewController
     }
 }

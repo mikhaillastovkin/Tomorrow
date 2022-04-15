@@ -11,4 +11,5 @@ struct MainMenuItem {
     let title: String
     let subTitle: String
     let imageName: String
+    let articleCategory: ArticleCategory
 }
