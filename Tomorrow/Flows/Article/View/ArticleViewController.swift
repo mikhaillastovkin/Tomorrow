@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class GamesViewController: UIViewController, InputGameViewController {
+class ArticleViewController: UIViewController, InputArticleViewController {
 
     //MARK: - Properties
 
@@ -17,29 +17,21 @@ final class GamesViewController: UIViewController, InputGameViewController {
         return scrollView
     }()
 
-    private lazy var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .title
         titleLabel.numberOfLines = 0
+        titleLabel.layer.masksToBounds = false
         return titleLabel
     }()
 
-    private lazy var subTitleLabel: UILabel = {
+    lazy var subTitleLabel: UILabel = {
         let subTitleLabel = UILabel()
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subTitleLabel.font = .subTitle
         subTitleLabel.numberOfLines = 1
         return subTitleLabel
-
-    }()
-
-    private lazy var categoryLabel: UILabel = {
-        let categoryLabel = UILabel()
-        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
-        categoryLabel.font = .subTitle
-        categoryLabel.numberOfLines = 1
-        return categoryLabel
     }()
 
     private lazy var propsView: UIView = {
@@ -67,7 +59,7 @@ final class GamesViewController: UIViewController, InputGameViewController {
         return propsTextLabel
     }()
 
-    private lazy var textLabel: UILabel = {
+    lazy var textLabel: UILabel = {
         let textLabel = UILabel()
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         textLabel.font = .mainText
@@ -75,11 +67,11 @@ final class GamesViewController: UIViewController, InputGameViewController {
         return textLabel
     }()
 
-    var presenter: OutputGameViewController
+    var presenter: OutputArticleViewController
 
     //MARK: - LifeCicle
 
-    init(presenter: OutputGameViewController) {
+    init(presenter: OutputArticleViewController) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -105,7 +97,6 @@ final class GamesViewController: UIViewController, InputGameViewController {
         self.view.addSubview(scrollView)
         scrollView.addSubview(titleLabel)
         scrollView.addSubview(subTitleLabel)
-        scrollView.addSubview(categoryLabel)
         scrollView.addSubview(propsView)
         propsView.addSubview(propsLabel)
         propsView.addSubview(propsTextLabel)
@@ -134,28 +125,21 @@ final class GamesViewController: UIViewController, InputGameViewController {
             titleLabel.topAnchor.constraint(
                 equalTo: scrollViewContent.topAnchor, constant: superOffsetY),
             titleLabel.leftAnchor.constraint(
-                equalTo: scrollViewContent.leftAnchor, constant: superOffsetX),
+                equalTo: safeArea.leftAnchor, constant: superOffsetX),
             titleLabel.rightAnchor.constraint(
-                equalTo: scrollViewContent.rightAnchor, constant: -superOffsetX),
-            titleLabel.widthAnchor.constraint(equalToConstant: view.bounds.width - (superOffsetX + superOffsetX)),
+                equalTo: safeArea.rightAnchor, constant: -superOffsetX),
 
             subTitleLabel.topAnchor.constraint(
                 equalTo: titleLabel.bottomAnchor, constant: (offsetY / 2).rounded()),
             subTitleLabel.leftAnchor.constraint(
-                equalTo: scrollViewContent.leftAnchor, constant: superOffsetX),
-
-            categoryLabel.leftAnchor.constraint(
-                equalTo: subTitleLabel.rightAnchor, constant: offsetX),
-            categoryLabel.rightAnchor.constraint(
-                equalTo: scrollViewContent.rightAnchor, constant: -superOffsetX),
-            categoryLabel.centerYAnchor.constraint(equalTo: subTitleLabel.centerYAnchor),
+                equalTo: safeArea.leftAnchor, constant: superOffsetX),
 
             propsView.topAnchor.constraint(
                 equalTo: subTitleLabel.bottomAnchor, constant: offsetY),
             propsView.leftAnchor.constraint(
-                equalTo: scrollViewContent.leftAnchor, constant: (superOffsetX / 2).rounded()),
+                equalTo: safeArea.leftAnchor, constant: (superOffsetX / 2).rounded()),
             propsView.rightAnchor.constraint(
-                equalTo: scrollViewContent.rightAnchor, constant: -(superOffsetX / 2).rounded()),
+                equalTo: safeArea.rightAnchor, constant: -(superOffsetX / 2).rounded()),
 
             propsLabel.topAnchor.constraint(
                 equalTo: propsView.topAnchor, constant: offsetY),
@@ -176,9 +160,9 @@ final class GamesViewController: UIViewController, InputGameViewController {
             textLabel.topAnchor.constraint(
                 equalTo: propsView.bottomAnchor, constant: offsetY),
             textLabel.leftAnchor.constraint(
-                equalTo: scrollViewContent.leftAnchor, constant: superOffsetX),
+                equalTo: safeArea.leftAnchor, constant: superOffsetX),
             textLabel.rightAnchor.constraint(
-                equalTo: scrollViewContent.rightAnchor, constant: -superOffsetX),
+                equalTo: safeArea.rightAnchor, constant: -superOffsetX),
             textLabel.bottomAnchor.constraint(
                 equalTo: scrollViewContent.bottomAnchor, constant: -superOffsetY)
         ])
@@ -199,21 +183,45 @@ final class GamesViewController: UIViewController, InputGameViewController {
     //MARK: - Fill data
 
     func fillData() {
-        let game = presenter.article
-        titleLabel.text = game.title
-        categoryLabel.text = game.categoryDescription.description()
-        textLabel.text = game.text
+        if let game = presenter.article as? SimpleArticle {
+            titleLabel.text = game.title
+            textLabel.text = game.text
 
-        if game.subtitle == nil {
-            subTitleLabel.text = game.categoryDescription.addSubTitle()
-        } else {
-            subTitleLabel.text = game.subtitle
+            if game.subtitle == nil {
+                subTitleLabel.text = CategoryManager.getSubtitle(for: game)
+            } else {
+                subTitleLabel.text = game.subtitle
+            }
+
+            if game.props == nil {
+                hidePropsView()
+            } else {
+                propsTextLabel.text = game.props
+            }
         }
 
-        if game.props == nil {
-            hidePropsView()
-        } else {
-            propsTextLabel.text = game.props
-        }
+//        if let paper = presenter.article as? Paper {
+//            hidePropsView()
+//            titleLabel.text = paper.title
+//            subTitleLabel.text = paper.subtitle
+//
+//            let path = Bundle.main.path(forResource: paper.fileName, ofType: "html")
+//            let url = URL(fileURLWithPath: path!)
+//
+//            guard let htmlData = try? NSString(contentsOf: url, usedEncoding: nil).data(using: String.Encoding.utf8.rawValue),
+//                  let attribute = try? NSMutableAttributedString(data: htmlData, options: [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.html], documentAttributes: nil)
+//
+//            else { return }
+//
+//            textLabel.attributedText = attribute
+//            textLabel.textColor = .textColor
+//        }
+
+//        if let other = presenter.article as? Other {
+//            titleLabel.text = other.title
+//            textLabel.text = other.text
+//            hidePropsView()
+//        }
     }
 }
+
