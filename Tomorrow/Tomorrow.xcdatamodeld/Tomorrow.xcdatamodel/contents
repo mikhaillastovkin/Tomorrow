@@ -6,6 +6,7 @@
         <attribute name="imgName" optional="YES" attributeType="String"/>
         <attribute name="isLiked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="props" optional="YES" attributeType="String"/>
+        <attribute name="sortTag" optional="YES" attributeType="String"/>
         <attribute name="subtitle" optional="YES" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
@@ -17,7 +18,7 @@
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Article" positionX="-27" positionY="72" width="128" height="149"/>
+        <element name="Article" positionX="-27" positionY="72" width="128" height="164"/>
         <element name="Notification" positionX="-18" positionY="144" width="128" height="89"/>
     </elements>
 </model>

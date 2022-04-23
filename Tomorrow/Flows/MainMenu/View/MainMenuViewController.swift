@@ -38,7 +38,7 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
         let readingLabel = UILabel()
         readingLabel.translatesAutoresizingMaskIntoConstraints = false
         readingLabel.font = UIFont.maimMenuTitleLable
-        readingLabel.text = "Чтиво"
+        readingLabel.text = "Понадобится"
         readingLabel.textColor = .titleColor
         return readingLabel
     }()
@@ -98,6 +98,11 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.presenter.checkError()
     }
 
     //MARK: - UI
@@ -170,6 +175,26 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
 
     @objc private func pressAllGames() {
         presenter.pressAllGamesButton()
+    }
+
+    //MARK: - Present Error
+
+    func presentError(message: String) {
+        let alert = UIAlertController(
+            title: "Ошибка",
+            message: message,
+            preferredStyle: .alert)
+        let alertRepeatAction = UIAlertAction(
+            title: "Попробовать снова",
+            style: .default) { [weak self] _ in
+                self?.presenter.reloadData()
+            }
+        let alertCancelAction = UIAlertAction(
+            title: "Отмена",
+            style: .cancel)
+        alert.addAction(alertRepeatAction)
+        alert.addAction(alertCancelAction)
+        present(alert, animated: true)
     }
 }
 

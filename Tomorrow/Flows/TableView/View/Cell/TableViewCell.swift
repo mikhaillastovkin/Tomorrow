@@ -18,6 +18,15 @@ final class TableViewCell: UITableViewCell {
         return image
     }()
 
+    lazy private var titleStack: UIStackView = {
+        let titleStack = UIStackView()
+        titleStack.axis = .vertical
+        titleStack.distribution = .fillEqually
+        titleStack.spacing = (Constants.offsetOtherSubject.y / 6).rounded()
+        titleStack.translatesAutoresizingMaskIntoConstraints = false
+        return titleStack
+    }()
+
     lazy private var titleLable: UILabel = {
         let titleLabel = UILabel()
         titleLabel.numberOfLines = 3
@@ -53,8 +62,7 @@ final class TableViewCell: UITableViewCell {
 
     private func configureUI() {
         contentView.addSubview(image)
-        contentView.addSubview(titleLable)
-        contentView.addSubview(subtitleLabel)
+        contentView.addSubview(titleStack)
         setupConstrains()
     }
 
@@ -66,13 +74,9 @@ final class TableViewCell: UITableViewCell {
             image.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: Constants.offsetOtherSubject.x),
             image.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -Constants.offsetSuperView.y / 2),
 
-            titleLable.leftAnchor.constraint(equalTo: image.rightAnchor, constant: Constants.offsetOtherSubject.x),
-            titleLable.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: -Constants.offsetSuperView.x),
-            titleLable.centerYAnchor.constraint(equalTo: image.centerYAnchor),
-
-            subtitleLabel.topAnchor.constraint(equalTo: titleLable.bottomAnchor, constant: (Constants.offsetOtherSubject.y / 6).rounded()),
-            subtitleLabel.leftAnchor.constraint(equalTo: image.rightAnchor, constant: Constants.offsetOtherSubject.x),
-            subtitleLabel.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: -Constants.offsetSuperView.x)
+            titleStack.leftAnchor.constraint(equalTo: image.rightAnchor, constant: Constants.offsetOtherSubject.x),
+            titleStack.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: -Constants.offsetSuperView.x),
+            titleStack.centerYAnchor.constraint(equalTo: image.centerYAnchor),
         ])
     }
 
@@ -82,6 +86,7 @@ final class TableViewCell: UITableViewCell {
         image.image = nil
         titleLable.text = nil
         subtitleLabel.text = nil
+        titleStack.removeArrangedSubview(subtitleLabel)
     }
 
     //MARK: - Configure Cell
@@ -90,7 +95,13 @@ final class TableViewCell: UITableViewCell {
         let imageBuilder = ImageBuilder()
         self.image.image = imageBuilder.imageBuild(name: image)
         self.titleLable.text = title
-        self.subtitleLabel.text = subtitle
+        titleStack.addArrangedSubview(titleLable)
+
+        if subtitle != nil {
+            subtitleLabel.isEnabled = true
+            self.subtitleLabel.text = subtitle
+            titleStack.addArrangedSubview(subtitleLabel)
+        }
 
         if indexPath.row % 2 == 0 {
             self.image.tintColor = UIColor.green1

@@ -46,6 +46,7 @@ final class CoreDataManager {
         article.props = remoteArticle.props
         article.imgName = remoteArticle.imgName
         article.isLiked = false
+        article.sortTag = remoteArticle.sortTag
 
         guard let urlString = remoteArticle.url else {
             article.htmlData = nil
@@ -68,23 +69,10 @@ final class CoreDataManager {
                 resultArray?.append(contentsOf: getFilterArrayForCategory(category) ?? [])
             }
         case .liked:
-            resultArray?.append(contentsOf: getFIlterArrayForLiked() ?? [])
+            resultArray?.append(contentsOf: getFilterArrayForLiked() ?? [])
         default:
             resultArray?.append(contentsOf: getFilterArrayForCategory(filter.rawValue) ?? [])
         }
-
-//        if filter == .games {
-//            for category in ArticleCategory.leader.rawValue...ArticleCategory.forFinish.rawValue {
-//                resultArray?.append(contentsOf: getFilterArrayForCategory(category) ?? [])
-//            }
-//        } else {
-//            if filter == .liked {
-//                resultArray?.append(contentsOf: getFIlterArrayForLiked() ?? [])
-//             }
-//            else {
-//            resultArray?.append(contentsOf: getFilterArrayForCategory(filter.rawValue) ?? [])
-//            }
-//        }
         return resultArray
     }
 
@@ -118,7 +106,7 @@ final class CoreDataManager {
         }
     }
 
-    private func getFIlterArrayForLiked() -> [Article]? {
+    private func getFilterArrayForLiked() -> [Article]? {
         let fetchRequest = Article.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "isLiked == %d", true)
         do {

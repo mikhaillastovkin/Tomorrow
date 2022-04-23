@@ -27,7 +27,7 @@
 		7469716227D9EECB007E94E6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469716127D9EECB007E94E6 /* Constants.swift */; };
 		7469716727DA1F2C007E94E6 /* ArticleViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469716627DA1F2C007E94E6 /* ArticleViewPresenter.swift */; };
 		7469716E27DA2F79007E94E6 /* LoadDataSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469716D27DA2F79007E94E6 /* LoadDataSevice.swift */; };
-		746BDF8C28042809007ED332 /* LoadAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746BDF8B28042809007ED332 /* LoadAppManager.swift */; };
+		746BDF8C28042809007ED332 /* TabBarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746BDF8B28042809007ED332 /* TabBarBuilder.swift */; };
 		746BDF932805AB7F007ED332 /* LocalNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746BDF922805AB7F007ED332 /* LocalNotificationCenter.swift */; };
 		746BDF992805D90A007ED332 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746BDF982805D90A007ED332 /* NotificationViewController.swift */; };
 		746BDF9C2805F73B007ED332 /* NotificationViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746BDF9B2805F73B007ED332 /* NotificationViewPresenter.swift */; };
@@ -36,6 +36,7 @@
 		748A15C127E8D94F0053CBF4 /* Ex+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748A15C027E8D94F0053CBF4 /* Ex+Colors.swift */; };
 		748A15C327EA21AB0053CBF4 /* Ex+Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748A15C227EA21AB0053CBF4 /* Ex+Shadows.swift */; };
 		749517CF27F206D4000FFB82 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749517CE27F206D4000FFB82 /* Errors.swift */; };
+		749CC22A28116B6C007EA48F /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749CC22928116B6C007EA48F /* WelcomeViewController.swift */; };
 		749F4E1827E303780027AFED /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F4E1727E303780027AFED /* TableViewController.swift */; };
 		749F4E1C27E3087C0027AFED /* TableViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F4E1B27E3087C0027AFED /* TableViewPresenter.swift */; };
 		749F4E2427E313320027AFED /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F4E2327E313320027AFED /* TableViewCell.swift */; };
@@ -50,7 +51,6 @@
 		74AAB85828006B540059044E /* Article+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AAB85628006B540059044E /* Article+CoreDataProperties.swift */; };
 		74AAB85B280072570059044E /* RemoteArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AAB85A280072570059044E /* RemoteArticle.swift */; };
 		74AAB85D2800AAB00059044E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AAB85C2800AAB00059044E /* CoreDataManager.swift */; };
-		74DEAE402804214F007CB3A8 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DEAE3F2804214F007CB3A8 /* MainTabBar.swift */; };
 		74FFCD5A27FC8C7400A58412 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FFCD5927FC8C7400A58412 /* CategoryManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,7 +78,7 @@
 		7469716127D9EECB007E94E6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7469716627DA1F2C007E94E6 /* ArticleViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewPresenter.swift; sourceTree = "<group>"; };
 		7469716D27DA2F79007E94E6 /* LoadDataSevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDataSevice.swift; sourceTree = "<group>"; };
-		746BDF8B28042809007ED332 /* LoadAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadAppManager.swift; sourceTree = "<group>"; };
+		746BDF8B28042809007ED332 /* TabBarBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBuilder.swift; sourceTree = "<group>"; };
 		746BDF922805AB7F007ED332 /* LocalNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationCenter.swift; sourceTree = "<group>"; };
 		746BDF982805D90A007ED332 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		746BDF9B2805F73B007ED332 /* NotificationViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewPresenter.swift; sourceTree = "<group>"; };
@@ -87,6 +87,7 @@
 		748A15C027E8D94F0053CBF4 /* Ex+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+Colors.swift"; sourceTree = "<group>"; };
 		748A15C227EA21AB0053CBF4 /* Ex+Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+Shadows.swift"; sourceTree = "<group>"; };
 		749517CE27F206D4000FFB82 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		749CC22928116B6C007EA48F /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		749F4E1727E303780027AFED /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		749F4E1B27E3087C0027AFED /* TableViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPresenter.swift; sourceTree = "<group>"; };
 		749F4E2327E313320027AFED /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
@@ -101,7 +102,6 @@
 		74AAB85628006B540059044E /* Article+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Article+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		74AAB85A280072570059044E /* RemoteArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteArticle.swift; sourceTree = "<group>"; };
 		74AAB85C2800AAB00059044E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		74DEAE3F2804214F007CB3A8 /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		74FFCD5927FC8C7400A58412 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -225,6 +225,7 @@
 		7469713B27D91615007E94E6 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				749CC225281165CF007EA48F /* WelcomViewController */,
 				74DEAE3E28042127007CB3A8 /* TabBar */,
 				749F4E2627E736C70027AFED /* MainMenu */,
 				746BDF962805D0A3007ED332 /* Notification */,
@@ -272,7 +273,6 @@
 			isa = PBXGroup;
 			children = (
 				7469716D27DA2F79007E94E6 /* LoadDataSevice.swift */,
-				746BDF8B28042809007ED332 /* LoadAppManager.swift */,
 				74AAB85C2800AAB00059044E /* CoreDataManager.swift */,
 				74FFCD5927FC8C7400A58412 /* CategoryManager.swift */,
 			);
@@ -327,6 +327,22 @@
 				749517CE27F206D4000FFB82 /* Errors.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		749CC22428114F4C007EA48F /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				746BDF8B28042809007ED332 /* TabBarBuilder.swift */,
+			);
+			path = Builder;
+			sourceTree = "<group>";
+		};
+		749CC225281165CF007EA48F /* WelcomViewController */ = {
+			isa = PBXGroup;
+			children = (
+				749CC22928116B6C007EA48F /* WelcomeViewController.swift */,
+			);
+			path = WelcomViewController;
 			sourceTree = "<group>";
 		};
 		749F4E1627E3034B0027AFED /* TableView */ = {
@@ -468,7 +484,7 @@
 		74DEAE3E28042127007CB3A8 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				74DEAE3F2804214F007CB3A8 /* MainTabBar.swift */,
+				749CC22428114F4C007EA48F /* Builder */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -534,7 +550,6 @@
 			files = (
 				7469712827D908D0007E94E6 /* LaunchScreen.storyboard in Resources */,
 				7469712527D908D0007E94E6 /* Assets.xcassets in Resources */,
-				746BDFA12806B49C007ED332 /* Articles.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,11 +561,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				74FFCD5A27FC8C7400A58412 /* CategoryManager.swift in Sources */,
-				746BDF8C28042809007ED332 /* LoadAppManager.swift in Sources */,
+				746BDF8C28042809007ED332 /* TabBarBuilder.swift in Sources */,
 				74532BC02806CDA40012589B /* Notification+CoreDataProperties.swift in Sources */,
 				749F4E2927E737200027AFED /* MainMenuViewController.swift in Sources */,
 				74AAB85728006B540059044E /* Article+CoreDataClass.swift in Sources */,
 				749F4E3427E8408F0027AFED /* MainMenuItem.swift in Sources */,
+				749CC22A28116B6C007EA48F /* WelcomeViewController.swift in Sources */,
 				7469713D27D9164F007E94E6 /* ArticleViewController.swift in Sources */,
 				74AAB85828006B540059044E /* Article+CoreDataProperties.swift in Sources */,
 				7452F53427F74EA0002A1FAE /* ImageBuilder.swift in Sources */,
@@ -568,7 +584,6 @@
 				748A15C127E8D94F0053CBF4 /* Ex+Colors.swift in Sources */,
 				749F4E3E27E856DB0027AFED /* MainMenuBuilder.swift in Sources */,
 				749F4E3027E83BC80027AFED /* HorizontalCollectionMainMenu.swift in Sources */,
-				74DEAE402804214F007CB3A8 /* MainTabBar.swift in Sources */,
 				7473DEAD27EC2A920022CEC4 /* VerticalCollectionMainMenu.swift in Sources */,
 				74AAB85B280072570059044E /* RemoteArticle.swift in Sources */,
 				7469712327D908CF007E94E6 /* Tomorrow.xcdatamodeld in Sources */,
@@ -731,7 +746,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 9TMC8XK38T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tomorrow/Info.plist;
@@ -762,7 +777,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 9TMC8XK38T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tomorrow/Info.plist;

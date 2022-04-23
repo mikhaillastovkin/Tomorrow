@@ -52,9 +52,9 @@ final class CategoryManager {
         switch category {
         case .games, .leader, .acquaintance, .activity, .mood, .hallGames, .forFinish:
             return "Игры"
-        case .ageFeatures, .difficultСhildren, .fireFly, .rope, .legends, .reading:
-            return "Чтиво"
-        case .other, .faq, .corner, .songs, .diagnostic, .crisis, .helpers:
+        case .ageFeatures, .songs, .diagnostic, .crisis, .fireFly, .rope, .legends, .reading:
+            return "Понадобится"
+        case .other, .difficultСhildren, .faq, .corner, .helpers, .ktd, .contest, .org:
             return "Пригодится"
         case .liked:
             return "Избранное"

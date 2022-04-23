@@ -16,4 +16,5 @@ struct RemoteArticle: Decodable{
     let imgName: String?
     let props: String?
     let url: String?
+    let sortTag: String?
 }

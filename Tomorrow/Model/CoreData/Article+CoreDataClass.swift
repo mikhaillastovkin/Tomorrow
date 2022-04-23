@@ -17,6 +17,14 @@ public class Article: NSManagedObject {
 extension Article: Comparable {
     public static func < (lhs: Article, rhs: Article) -> Bool {
 
+        if let lTag = lhs.sortTag {
+            return lTag < (rhs.sortTag ?? rhs.title) ?? ""
+            } else {
+                if let rTag = rhs.sortTag {
+                    return lhs.title ?? "" < rTag
+            }
+        }
+
         guard let left = lhs.title,
               let right = rhs.title
         else { return false }

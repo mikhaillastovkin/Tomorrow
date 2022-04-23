@@ -17,30 +17,25 @@ final class MainMenuBuilder{
         var games: [MainMenuItem] = []
 
         games.append(MainMenuItem(
-            title: "В поисках лидера",
-            subTitle: "Организационный \nпериод",
-            imageName: "leader",
-            articleCategory: .leader))
-        games.append(MainMenuItem(
             title: "Для знакомства",
             subTitle: "Организационный \nпериод",
             imageName: "acquaintance",
             articleCategory: .acquaintance))
         games.append(MainMenuItem(
-            title: "Подвижные игры",
-            subTitle: "Основной \nпериод",
-            imageName: "activity",
-            articleCategory: .activity))
-        games.append(MainMenuItem(
-            title: "Для настроения",
-            subTitle: "Основной \nпериод",
-            imageName: "mood",
-            articleCategory: .mood))
+            title: "В поисках лидера",
+            subTitle: "Организационный \nпериод",
+            imageName: "leader",
+            articleCategory: .leader))
         games.append(MainMenuItem(
             title: "Игры с залом",
             subTitle: "Основной \nпериод",
             imageName: "audience",
             articleCategory: .hallGames))
+        games.append(MainMenuItem(
+            title: "Подвижные игры",
+            subTitle: "Основной \nпериод",
+            imageName: "activity",
+            articleCategory: .activity))
         games.append(MainMenuItem(
             title: "В конце смены",
             subTitle: "Заключительный \nпериод",
@@ -58,10 +53,15 @@ final class MainMenuBuilder{
             imageName: "children",
             articleCategory: .ageFeatures))
         reading.append(MainMenuItem(
-            title: "Трудные дети",
-            subTitle: "Как быть?",
-            imageName: "badBoy",
-            articleCategory: .difficultСhildren))
+            title: "Если нужен результат",
+            subTitle: "Диагностика и опросы",
+            imageName: "diagnostic",
+            articleCategory: .diagnostic))
+        reading.append(MainMenuItem(
+            title: "Кризисы",
+            subTitle: "Сложные ситуации и пути решения",
+            imageName: "crisis",
+            articleCategory: .crisis))
         reading.append(MainMenuItem(
             title: "Отрядные огоньки",
             subTitle: "А поговорить?",
@@ -77,6 +77,11 @@ final class MainMenuBuilder{
             subTitle: "Давным-давно…",
             imageName: "legends",
             articleCategory: .legends))
+        reading.append(MainMenuItem(
+            title: "А есть гитара?",
+            subTitle: "Тексты и аккорды самых любимых лагерных песен",
+            imageName: "songs",
+            articleCategory: .songs))
 
         return reading
     }
@@ -85,30 +90,35 @@ final class MainMenuBuilder{
         var other: [MainMenuItem] = []
 
         other.append(MainMenuItem(
+            title: "Что такое оргсбор",
+            subTitle: "Начало перемен...",
+            imageName: "org",
+            articleCategory: .org))
+        other.append(MainMenuItem(
             title: "Твои помощники",
             subTitle: "Как найти союзников?",
             imageName: "helper",
             articleCategory: .helpers))
-        other.append(MainMenuItem(
-            title: "Если нужен результат?",
-            subTitle: "Диагностика и опросы",
-            imageName: "diagnostic",
-            articleCategory: .diagnostic))
         other.append(MainMenuItem(
             title: "Отрядный уголок",
             subTitle: "Рисуем, вырезаем, клеим...",
             imageName: "art",
             articleCategory: .corner))
         other.append(MainMenuItem(
-            title: "А есть гитара?",
-            subTitle: "Тексты и аккорды самых любимых лагерных песен",
-            imageName: "songs",
-            articleCategory: .songs))
+            title: "6 стадий",
+            subTitle: "Если у вас КТД на носу",
+            imageName: "ktd",
+            articleCategory: .ktd))
         other.append(MainMenuItem(
-            title: "Кризисы",
-            subTitle: "Сложные ситуации и пути решения",
-            imageName: "crisis",
-            articleCategory: .crisis))
+            title: "Трудные дети",
+            subTitle: "Как быть?",
+            imageName: "badBoy",
+            articleCategory: .difficultСhildren))
+        other.append(MainMenuItem(
+            title: "Конкурсная программа",
+            subTitle: "Порядок действий",
+            imageName: "contest",
+            articleCategory: .contest))
         other.append(MainMenuItem(
             title: "Спрашивали? Отвечаем!",
             subTitle: "Ответы на популярные вопросы",

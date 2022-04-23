@@ -27,9 +27,16 @@ class TableViewController: UIViewController, InputTableView {
         return tableView
     }()
 
+    lazy private var swipeGestureRecognizer: UISwipeGestureRecognizer = {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
+        swipeGestureRecognizer.numberOfTouchesRequired = 1
+        swipeGestureRecognizer.direction = .right
+        return swipeGestureRecognizer
+    }()
+
     var presenter: OutputTableView
 
-    //MARK: - Life circle
+    //MARK: - Life cicle
 
     init(presenter: OutputTableView) {
         self.presenter = presenter
@@ -83,9 +90,10 @@ class TableViewController: UIViewController, InputTableView {
         ])
     }
 
-    //MARK: Setup properties delegates
+    //MARK: Setup properties
 
     private func setupTableView() {
+        self.tableView.addGestureRecognizer(swipeGestureRecognizer)
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.cellIdentifire)
@@ -93,6 +101,10 @@ class TableViewController: UIViewController, InputTableView {
 
     private func setupSearchBar() {
         self.searchBar.delegate = self
+    }
+
+    @objc private func swipe() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

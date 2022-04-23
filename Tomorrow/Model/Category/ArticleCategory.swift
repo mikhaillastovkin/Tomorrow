@@ -25,6 +25,9 @@ enum ArticleCategory: Int16 {
     case songs = 14
     case diagnostic = 15
     case crisis = 16
+    case ktd = 17
+    case contest = 18
+    case org = 19
     case games
     case reading
     case other

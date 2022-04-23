@@ -11,7 +11,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
 
     //MARK: - Properties
 
-    lazy private var mainImageView: UIImageView = {
+    private lazy var mainImageView: UIImageView = {
         let mainImageView = UIImageView()
         mainImageView.layer.cornerRadius = Constants.corenerRadius
         mainImageView.contentMode = .scaleAspectFill
@@ -20,14 +20,14 @@ final class MainCollectionViewCell: UICollectionViewCell {
         return mainImageView
     }()
 
-    lazy private var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
-    lazy private var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.font = UIFont.mainMenuItemTitleLabel
         titleLabel.textColor = .white
@@ -38,7 +38,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
         return titleLabel
     }()
 
-    lazy private var subtitleLable: UILabel = {
+    private lazy var subtitleLable: UILabel = {
         let subtitleLable = UILabel()
         subtitleLable.font = UIFont.mainMenuItemSubtitleLabel
         subtitleLable.textColor = .white
@@ -120,7 +120,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
         switch indexItem {
         case 0...1:
             mainImageView.backgroundColor = .green1
-        case 2...4:
+        case 2...3:
             mainImageView.backgroundColor = .green2
         default:
             mainImageView.backgroundColor = .green3

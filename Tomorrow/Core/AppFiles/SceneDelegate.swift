@@ -14,22 +14,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let loadAppManager = LoadAppManager()
-        window?.rootViewController = loadAppManager.start()
+
+        UIApplication.shared.applicationIconBadgeNumber = 0
+
+        guard let _ = UserDefaults.standard.value(forKey: "firstStart")
+        else {
+            let welcome = WelcomeViewController()
+            window?.rootViewController = welcome
+            window?.makeKeyAndVisible()
+            return
+        }
+
+        let tabBarController = TabBarBuilder().build()
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
-    }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-    }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-
-    }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

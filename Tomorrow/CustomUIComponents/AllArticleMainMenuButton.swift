@@ -10,8 +10,8 @@ import UIKit
 class AllArticleMainMenuButton: UIButton {
 
     convenience init(color: UIColor) {
-        self.init(type: .custom)
-        self.setImage(UIImage(systemName: "chevron.forward"), for: .normal)
+        self.init(type: .system)
+        self.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         self.tintColor = color
         self.scalesLargeContentImage = true
     }

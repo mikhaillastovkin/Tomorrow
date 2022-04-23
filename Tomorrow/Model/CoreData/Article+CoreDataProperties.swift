@@ -24,6 +24,7 @@ extension Article {
     @NSManaged public var props: String?
     @NSManaged public var htmlData: Data?
     @NSManaged public var isLiked: Bool
+    @NSManaged public var sortTag: String?
 
 }
 

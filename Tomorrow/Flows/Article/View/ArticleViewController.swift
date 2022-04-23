@@ -73,6 +73,13 @@ class ArticleViewController: UIViewController, InputArticleViewController {
         return textLabel
     }()
 
+    lazy private var swipeGestureRecognizer: UISwipeGestureRecognizer = {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
+        swipeGestureRecognizer.numberOfTouchesRequired = 1
+        swipeGestureRecognizer.direction = .right
+        return swipeGestureRecognizer
+    }()
+
     var presenter: OutputArticleViewController
 
     //MARK: - LifeCicle
@@ -96,7 +103,7 @@ class ArticleViewController: UIViewController, InputArticleViewController {
     //MARK: UI
 
     private func configureUI() {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         view.backgroundColor = .systemBackground
         self.view.addSubview(scrollView)
         scrollView.addSubview(titleLabel)
@@ -107,6 +114,7 @@ class ArticleViewController: UIViewController, InputArticleViewController {
         propsView.addSubview(propsTextLabel)
         scrollView.addSubview(textLabel)
         configureConstraints()
+        view.addGestureRecognizer(swipeGestureRecognizer)
     }
 
     //MARK: Constreints
@@ -197,13 +205,15 @@ class ArticleViewController: UIViewController, InputArticleViewController {
             target: self,
             action: #selector(pressLikeButton))
 
-        navigationController?.navigationBar.contentMode = .right
-
-        self.navigationItem.rightBarButtonItems =  [likeItem]
+        self.navigationItem.rightBarButtonItem = likeItem
     }
 
     @objc private func pressLikeButton() {
         presenter.pressLikeButton()
+    }
+
+    @objc private func swipe() {
+        navigationController?.popViewController(animated: true)
     }
 
     //MARK: Hide props
@@ -215,7 +225,6 @@ class ArticleViewController: UIViewController, InputArticleViewController {
     //MARK: - Fill data
 
     func fillDataArticle(title: String?, image: UIImage?, subtitle: String?, attributeText: NSAttributedString?, props: String?) {
-
         titleLabel.text = title
         imageView.image = image
         subTitleLabel.text = subtitle

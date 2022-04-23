@@ -8,14 +8,11 @@
 import Foundation
 
 
-enum ParsDataError: Error {
-    case notFoundData, wrongType
-}
-
 enum DecoderConfigurationError: Error {
   case missingManagedObjectContext
 }
 
-enum LoadDataError: Error {
-    case wrongUrl, networkError
+enum LoadDataError: Error{
+    case wrongUrl, networkError, wrongPars
+
 }

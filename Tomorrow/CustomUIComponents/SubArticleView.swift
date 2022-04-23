@@ -12,7 +12,7 @@ class SubArticleView: UIView {
     convenience init(backgroundColor: UIColor) {
         self.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.layer.cornerRadius = 25
+        self.layer.cornerRadius = Constants.corenerRadius
         self.layer.masksToBounds = true
         self.backgroundColor = backgroundColor
     }

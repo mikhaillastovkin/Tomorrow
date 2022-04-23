@@ -10,11 +10,11 @@ import CoreData
 
 final class LoadDataSevice<T: Decodable> {
 
-    func loadRemoteData(from: String, complition: @escaping(Data?, Error?) -> Void) {
+    func loadRemoteData(from: String, complition: @escaping(Data?, LoadDataError?) -> Void) {
         let session = URLSession.shared
         guard let url = URL(string: from)
         else {
-            complition(nil, LoadDataError.wrongUrl )
+            complition(nil, .wrongUrl )
             return }
         let request = URLRequest(url: url)
         let task = session.dataTask(with: request) { data, response, error in
@@ -22,7 +22,7 @@ final class LoadDataSevice<T: Decodable> {
                   response.statusCode < 400,
                   error == nil
             else {
-                complition(nil, LoadDataError.networkError)
+                complition(nil, .networkError)
                 return
             }
             DispatchQueue.main.async {
@@ -32,18 +32,16 @@ final class LoadDataSevice<T: Decodable> {
         task.resume()
     }
 
-    func fecthRemoteData(from: String, complition: @escaping([T]?, Error?) -> Void) {
+    func fecthRemoteData(from: String, complition: @escaping([T]?, LoadDataError?) -> Void) {
         loadRemoteData(from: from) { data, error in
             guard let data = data
             else {
                 complition(nil, error)
                 return
             }
-
             let dispatchGroup = DispatchGroup()
-
             var array: [T]?
-            var error: Error?
+            var currentError: LoadDataError?
 
             let decoder = JSONDecoder()
             decoder.userInfo[CodingUserInfoKey.managedObjectContext] = CoreDataManager().getContext()
@@ -52,13 +50,12 @@ final class LoadDataSevice<T: Decodable> {
                 do {
                     array = try decoder.decode([T].self, from: data)
                 }
-                catch let currentError as NSError {
-                    print(currentError.localizedDescription)
-                    error = currentError
+                catch {
+                    currentError = .wrongPars
                 }
             }
             dispatchGroup.notify(queue: DispatchQueue.main) {
-                complition(array, error)
+                complition(array, currentError)
             }
         }
     }

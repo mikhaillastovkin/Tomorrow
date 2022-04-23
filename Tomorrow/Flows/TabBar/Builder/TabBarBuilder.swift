@@ -1,5 +1,5 @@
 //
-//  LoadAppManager.swift
+//  TabBarBuilder.swift
 //  Завтра в лагерь
 //
 //  Created by Михаил Ластовкин on 11.04.2022.
@@ -7,56 +7,22 @@
 
 import UIKit
 
-final class LoadAppManager {
+final class TabBarBuilder {
 
-    func start() -> UITabBarController{
-
-        guard let flag = UserDefaults.standard.value(forKey: "saveData") as? Bool,
-              flag == true
-        else {
-            return firstStartApp()
-        }
-        return startApp()
-    }
-
-    private func firstStartApp() -> UITabBarController {
-
-        let coreDataManager = CoreDataManager()
-        let loadArticleService = LoadDataSevice<RemoteArticle>()
-        let articleUrlString = "https://storage.yandexcloud.net/zavtra-v-lager/Articles.json"
-
-        loadArticleService.fecthRemoteData(from: articleUrlString) { articles, error in
-            articles?.forEach({ article in
-                coreDataManager.saveRemoteArticleToCoreData(remoteArticle: article)
-            })
-        }
-
-        let loadNotificationService = LoadDataSevice<Notification>()
-        let notificationUrlString = "https://storage.yandexcloud.net/zavtra-v-lager/Notifications.json"
-
-        loadNotificationService.fecthRemoteData(from: notificationUrlString) { notification, error in
-            coreDataManager.saveContext()
-        }
-
-        UserDefaults.standard.set(true, forKey: "saveData")
-        return start()
-    }
-
-    private func startApp() -> UITabBarController {
+    func build() -> UITabBarController {
         let mainMenu = MainMenuBuilder().buildMainMenu()
-
         let favoriteArticlearticle = TableViewBuilder().buildTableView(with: .liked)
-
         let notificationView = NotificationViewBuilder().build()
 
-
         let tabBarController = UITabBarController()
+        
         tabBarController.tabBar.tintColor = .green2
         tabBarController.viewControllers = [
-            prepareViewController(mainMenu, title: "Меню", systemNameImg: "house", navigation: true),
+            prepareViewController(mainMenu, title: "Меню", systemNameImg: "leaf", navigation: true),
             prepareViewController(favoriteArticlearticle, title: "Избранное", systemNameImg: "heart", navigation: true),
             prepareViewController(notificationView, title: "Уведомления", systemNameImg: "bell", navigation: true)
         ]
+
         tabBarController.selectedIndex = 0
         tabBarController.tabBar.backgroundColor = .clear
 
