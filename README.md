@@ -89,9 +89,6 @@
 	<div><span style="font-family:Arial,Helvetica,sans-serif">Некоторые статьи требовали оформления с атрибутами. Пришлось добавить в модель html дату.</span></div>
 	</li>
 	<li>
-	<div><span style="font-family:Arial,Helvetica,sans-serif">Работаю над приветственным экраном.</span></div>
-	</li>
-	<li>
 	<div><span style="font-family:Arial,Helvetica,sans-serif">Работаю над покрытием тестами</span></div>
 	</li>
 </ol>
