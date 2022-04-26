@@ -28,8 +28,19 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       language = "ru"
-      region = "RU">
+      region = "RU"
+      codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "74BB4C6E2817DFEA00712603"
+               BuildableName = "TomorrowTests.xctest"
+               BlueprintName = "TomorrowTests"
+               ReferencedContainer = "container:Tomorrow.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
