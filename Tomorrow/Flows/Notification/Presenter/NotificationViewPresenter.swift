@@ -5,7 +5,6 @@
 //  Created by Михаил Ластовкин on 12.04.2022.
 //
 
-import Foundation
 import UIKit
 
 protocol InputNotificationViewController {
@@ -23,7 +22,6 @@ protocol OutputNotificationViewController {
 }
 
 final class NotificationViewPresenter: OutputNotificationViewController {
-
     weak var inputView: (UIViewController & InputNotificationViewController)? {
         didSet {
             checkNotification()
@@ -56,7 +54,6 @@ final class NotificationViewPresenter: OutputNotificationViewController {
         notificationCenter.requestAutorisation()
     }
 
-
     func cancelNotification() {
         notificationCenter.notificationCenter.removeAllPendingNotificationRequests()
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -66,7 +63,6 @@ final class NotificationViewPresenter: OutputNotificationViewController {
     }
 
     func setNotification() {
-
         guard let startDate = inputView?.date,
               let daysCount = inputView?.daysCount
         else { return }
@@ -75,8 +71,7 @@ final class NotificationViewPresenter: OutputNotificationViewController {
 
         DispatchQueue.global().async { [weak self] in
             let filterNotification = allNotifications?
-                .filter({ $0.offsetTime < daysCount - 2 })
-            let penultimateDay = allNotifications?.filter({ $0.identifire == "Предпоследний день"}).first
+                .filter({ $0.offsetTime < daysCount - 1 })
             let lastDay = allNotifications?.filter({ $0.identifire == "Последний день"}).first
 
             filterNotification?.forEach({
@@ -85,14 +80,6 @@ final class NotificationViewPresenter: OutputNotificationViewController {
                 let dateComponent = date.getDateComponenet()
                 self?.notificationCenter.setNotification(title: $0.title, body: $0.body, date: dateComponent, identifire: $0.identifire)
                 })
-
-            guard let penultimateDate = Calendar.current.date(byAdding: .day, value: daysCount - 2, to: startDate)
-            else { return }
-            self?.notificationCenter.setNotification(
-                title: penultimateDay?.title,
-                body: penultimateDay?.body,
-                date: penultimateDate.getDateComponenet(),
-                identifire: penultimateDay?.identifire)
 
             guard let lastDate = Calendar.current.date(byAdding: .day, value: daysCount - 1, to: startDate)
             else { return }

@@ -10,7 +10,6 @@ import UIKit
 final class MainCollectionViewCell: UICollectionViewCell {
 
     //MARK: - Properties
-
     private lazy var mainImageView: UIImageView = {
         let mainImageView = UIImageView()
         mainImageView.layer.cornerRadius = Constants.corenerRadius
@@ -51,7 +50,6 @@ final class MainCollectionViewCell: UICollectionViewCell {
     static let cellIdentifire = "MainCollectionViewCellIdentifire"
 
     //MARK: - Life circle
-
     override func layoutSubviews() {
         super.layoutSubviews()
         setupUI()
@@ -62,9 +60,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
         clearCell()
     }
 
-
     //MARK: - UI
-    
     private func setupUI(){
         contentView.layer.masksToBounds = true
         contentView.addSubview(mainImageView)
@@ -81,7 +77,6 @@ final class MainCollectionViewCell: UICollectionViewCell {
         let offsetY = Constants.offsetOtherSubject.y
 
         NSLayoutConstraint.activate([
-
             mainImageView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             mainImageView.leftAnchor.constraint(equalTo: safeArea.leftAnchor),
             mainImageView.rightAnchor.constraint(equalTo: safeArea.rightAnchor),
@@ -103,7 +98,6 @@ final class MainCollectionViewCell: UICollectionViewCell {
     }
 
     //MARK: - Clear reusable cell
-
     private func clearCell() {
         imageView.image = nil
         titleLabel.text = nil
@@ -111,7 +105,6 @@ final class MainCollectionViewCell: UICollectionViewCell {
     }
 
     //MARK: - Configure Cell
-
     func configure(imageCattegory: UIImage?, title: String, subtitle: String, indexItem: Int) {
         self.imageView.image = imageCattegory
         self.titleLabel.text = title

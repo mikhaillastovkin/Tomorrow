@@ -10,7 +10,7 @@ import UIKit
 final class TabBarBuilder {
 
     func build() -> UITabBarController {
-        let mainMenu = MainMenuBuilder().buildMainMenu()
+        let mainMenu = MainMenuBuilder().buildMainMenu(coreDataManager: CoreDataManager())
         let favoriteArticlearticle = TableViewBuilder().buildTableView(with: .liked)
         let notificationView = NotificationViewBuilder().build()
 
@@ -30,7 +30,6 @@ final class TabBarBuilder {
     }
 
     private func prepareViewController(_ controller: UIViewController, title: String, systemNameImg: String, navigation: Bool) -> UIViewController {
-
         controller.title = title
         controller.tabBarItem.selectedImage = UIImage(systemName: "\(systemNameImg).fill")
         controller.tabBarItem.image = UIImage(systemName: systemNameImg)

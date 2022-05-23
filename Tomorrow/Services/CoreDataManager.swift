@@ -8,10 +8,16 @@
 import CoreData
 import UIKit
 
-final class CoreDataManager {
+protocol AbstractCoreDataManager {
+    func saveContext()
+    func saveRemoteArticleToCoreData(remoteArticle: RemoteArticle)
+    func loadArticles(filter: ArticleCategory) -> [Article]?
+    func loadNotification() -> [Notification]?
+}
+
+final class CoreDataManager: AbstractCoreDataManager {
 
     //MARK: - Public
-
     func getContext() -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
@@ -23,17 +29,6 @@ final class CoreDataManager {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
-    }
-
-    func resetCoreData() {
-        let context = getContext()
-        let fetchRequest: NSFetchRequest<Article> = Article.fetchRequest()
-        if let result = try? context.fetch(fetchRequest) {
-            result.forEach {
-                context.delete($0)
-            }
-        }
-        saveContext()
     }
 
     func saveRemoteArticleToCoreData(remoteArticle: RemoteArticle) {
@@ -93,7 +88,6 @@ final class CoreDataManager {
     }
 
     //MARK: - Private
-
     private func getFilterArrayForCategory(_ category: Int16) -> [Article]? {
         let fetchRequest = Article.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "category == %i", category)

@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Article {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Article> {
@@ -25,7 +24,6 @@ extension Article {
     @NSManaged public var htmlData: Data?
     @NSManaged public var isLiked: Bool
     @NSManaged public var sortTag: String?
-
 }
 
 extension Article : Identifiable {

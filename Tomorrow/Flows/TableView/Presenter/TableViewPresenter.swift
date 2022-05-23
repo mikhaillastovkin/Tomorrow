@@ -21,15 +21,14 @@ protocol OutputTableView {
 }
 
 final class TableViewPresenter: OutputTableView {
-
     var articles: [Article]?
     var category: ArticleCategory
     var searchResult: [Article]?
-    let coredataManager = CoreDataManager()
-
+    let coredataManager: CoreDataManager
     weak var viewInput: (UIViewController & InputTableView)?
 
-    init(articleCategory: ArticleCategory) {
+    init(articleCategory: ArticleCategory, coredataManager: CoreDataManager) {
+        self.coredataManager = coredataManager
         category = articleCategory
     }
 
@@ -40,7 +39,6 @@ final class TableViewPresenter: OutputTableView {
     }
 
     //MARK: - Search article
-
     func viewDidSeach(with query: String) {
         if query == "" {
             searchResult = articles
@@ -53,7 +51,6 @@ final class TableViewPresenter: OutputTableView {
     }
 
     //MARK: - Select article
-
     func viewDidSelectArticle(index: Int) {
         guard let selectArticle = searchResult?[index]
         else { return }

@@ -55,21 +55,15 @@ extension LocalNotificationCenter: UNUserNotificationCenterDelegate {
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-
-
         if let scene = (response.targetScene as? UIWindowScene),
            let tabBar = scene.windows.first?.rootViewController as? UITabBarController,
            let navigationController = tabBar.selectedViewController as? UINavigationController {
-
             let identifire = response.notification.request.identifier
-
             let coreDataManager = CoreDataManager()
-
             guard let article = coreDataManager.loadArticles(filter: .crisis)?
                 .filter({ $0.title == identifire })
                 .first
             else { return }
-
             let viewController = ArticleViewBuilder().buildArticleViewController(with: article)
             navigationController.pushViewController(viewController, animated: true)
         }

@@ -10,7 +10,6 @@ import UIKit
 final class TableViewCell: UITableViewCell {
 
     //MARK: - Properties
-
     lazy private var image: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
@@ -46,8 +45,7 @@ final class TableViewCell: UITableViewCell {
 
     static let cellIdentifire = "TableViewCell"
 
-    //MARK: Life cicle
-    
+    //MARK: - Life cicle
     override func layoutSubviews () {
         super.layoutSubviews()
         configureUI()
@@ -59,7 +57,6 @@ final class TableViewCell: UITableViewCell {
     }
 
     //MARK: - UI
-
     private func configureUI() {
         contentView.addSubview(image)
         contentView.addSubview(titleStack)
@@ -81,7 +78,6 @@ final class TableViewCell: UITableViewCell {
     }
 
     //MARK: - Clear cell before reuse
-
     private func clearCell() {
         image.image = nil
         titleLable.text = nil
@@ -90,7 +86,6 @@ final class TableViewCell: UITableViewCell {
     }
 
     //MARK: - Configure Cell
-
     func configure(image: String?, title: String?, subtitle: String?, indexPath: IndexPath) {
         let imageBuilder = ImageBuilder()
         self.image.image = imageBuilder.imageBuild(name: image)

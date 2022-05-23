@@ -10,7 +10,6 @@ import UIKit
 final class MainMenuViewController: UIViewController, InputMainMenu {
 
     //MARK: - Properties
-
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +79,6 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
     var presenter: OutputMainMenu
 
     //MARK: - Life cicle
-
     init(presenter: OutputMainMenu) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -106,7 +104,6 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
     }
 
     //MARK: - UI
-
     private func setupUI() {
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(scrollView)
@@ -121,7 +118,6 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
     }
 
     //MARK: - Constreints
-
     private func setupConstreints() {
         let safeArea = self.view.safeAreaLayoutGuide
         let scrollViewContent = scrollView.contentLayoutGuide
@@ -172,13 +168,11 @@ final class MainMenuViewController: UIViewController, InputMainMenu {
     }
 
     //MARK: - Navigation
-
     @objc private func pressAllGames() {
         presenter.pressAllGamesButton()
     }
 
     //MARK: - Present Error
-
     func presentError(message: String) {
         let alert = UIAlertController(
             title: "Ошибка",
@@ -215,12 +209,10 @@ extension MainMenuViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.cellIdentifire, for: indexPath) as? MainCollectionViewCell
         else { return UICollectionViewCell() }
 
         switch collectionView {
-
         case gameCollectionView:
             let item = presenter.items.games[indexPath.item]
             cell.configure(
@@ -255,7 +247,6 @@ extension MainMenuViewController: UICollectionViewDataSource {
 //MARK: - CollectionView Delegate
 
 extension MainMenuViewController: UICollectionViewDelegate {
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
         case gameCollectionView:
@@ -272,11 +263,8 @@ extension MainMenuViewController: UICollectionViewDelegate {
 
 //MARK: - CollectionView DelegateFlowLayout
 extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
         switch collectionView {
-
         case gameCollectionView, readingCollectionView:
             let wight = (collectionView.bounds.width / 2.5).rounded()
             let height = collectionView.bounds.height

@@ -10,7 +10,6 @@ import UIKit
 class ArticleViewController: UIViewController, InputArticleViewController {
 
     //MARK: - Properties
-
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,7 +82,6 @@ class ArticleViewController: UIViewController, InputArticleViewController {
     var presenter: OutputArticleViewController
 
     //MARK: - LifeCicle
-
     init(presenter: OutputArticleViewController) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -98,10 +96,7 @@ class ArticleViewController: UIViewController, InputArticleViewController {
         configureUI()
     }
 
-    //MARK: - Private
-
-    //MARK: UI
-
+    //MARK: - UI
     private func configureUI() {
         navigationController?.setNavigationBarHidden(false, animated: true)
         view.backgroundColor = .systemBackground
@@ -118,7 +113,6 @@ class ArticleViewController: UIViewController, InputArticleViewController {
     }
 
     //MARK: Constreints
-
     private func configureConstraints() {
         let safeArea = self.view.safeAreaLayoutGuide
         let scrollViewContent = scrollView.contentLayoutGuide
@@ -204,7 +198,6 @@ class ArticleViewController: UIViewController, InputArticleViewController {
             style: .plain,
             target: self,
             action: #selector(pressLikeButton))
-
         self.navigationItem.rightBarButtonItem = likeItem
     }
 
@@ -217,13 +210,11 @@ class ArticleViewController: UIViewController, InputArticleViewController {
     }
 
     //MARK: Hide props
-
     private func hidePropsView() {
         propsView.isHidden = true
     }
 
     //MARK: - Fill data
-
     func fillDataArticle(title: String?, image: UIImage?, subtitle: String?, attributeText: NSAttributedString?, props: String?) {
         titleLabel.text = title
         imageView.image = image

@@ -10,11 +10,9 @@ import UIKit
 final class TableViewBuilder {
 
     func buildTableView(with category: ArticleCategory) -> (TableViewController) {
-
-        let presenter = TableViewPresenter(articleCategory: category)
+        let presenter = TableViewPresenter(articleCategory: category, coredataManager: CoreDataManager())
         let viewController = TableViewController(presenter: presenter)
         presenter.viewInput = viewController
-
         return viewController
     }
 }

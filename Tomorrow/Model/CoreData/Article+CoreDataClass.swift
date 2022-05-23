@@ -11,7 +11,6 @@ import CoreData
 
 @objc(Article)
 public class Article: NSManagedObject {
-
 }
 
 extension Article: Comparable {

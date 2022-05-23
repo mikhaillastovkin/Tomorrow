@@ -14,7 +14,6 @@ enum NotificationViewButton {
 final class NotificationViewController: UIViewController, InputNotificationViewController {
 
     //MARK: - Properties
-
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -94,13 +93,10 @@ final class NotificationViewController: UIViewController, InputNotificationViewC
     }()
 
     var presenter: OutputNotificationViewController
-
     var date: Date?
-
     var daysCount: Int?
 
     //MARK: - Life cicle
-
     init(presenter: OutputNotificationViewController) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -122,7 +118,6 @@ final class NotificationViewController: UIViewController, InputNotificationViewC
     }
 
     //MARK: - UI
-
     private func setupUI() {
         view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
@@ -145,7 +140,6 @@ final class NotificationViewController: UIViewController, InputNotificationViewC
         let scrollContent = scrollView.contentLayoutGuide
 
         NSLayoutConstraint.activate([
-
             scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             scrollView.leftAnchor.constraint(equalTo: safeArea.leftAnchor),
             scrollView.rightAnchor.constraint(equalTo: safeArea.rightAnchor),
@@ -184,7 +178,6 @@ final class NotificationViewController: UIViewController, InputNotificationViewC
     }
 
     //MARK: - Action
-
     @objc private func pressOKButton() {
         date = datePicer.date
         if let count = textField.text,
@@ -223,7 +216,6 @@ final class NotificationViewController: UIViewController, InputNotificationViewC
     }
 
     //MARK: - Alert
-
     func presentAlert(title: String, message: String?) {
         let alert = UIAlertController(
             title: title,
@@ -237,7 +229,6 @@ final class NotificationViewController: UIViewController, InputNotificationViewC
 }
 
 //MARK: - TextField Delegate
-
 extension NotificationViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         UIView.animate(withDuration: 0.3, delay: 0) {
