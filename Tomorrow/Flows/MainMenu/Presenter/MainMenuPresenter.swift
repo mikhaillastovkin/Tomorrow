@@ -22,23 +22,20 @@ protocol OutputMainMenu {
 }
 
 final class MainMenuPresenter: OutputMainMenu {
-
     weak var viewInput: (UIViewController & InputMainMenu)?
     var items: (games: [MainMenuItem], reading: [MainMenuItem], other: [MainMenuItem])
     var loadDataError: LoadDataError?
+    let coreDataManager: AbstractCoreDataManager
 
-    let coreDataManager = CoreDataManager()
-
-    init(items: (games: [MainMenuItem], reading: [MainMenuItem], other: [MainMenuItem])) {
-
+    init(items: (games: [MainMenuItem], reading: [MainMenuItem], other: [MainMenuItem]), coreDataManager: AbstractCoreDataManager) {
         self.items.games = items.games
         self.items.reading = items.reading
         self.items.other = items.other
+        self.coreDataManager = coreDataManager
         checkData()
     }
 
     //MARK: Present
-
     private func presentArticles(category: ArticleCategory) {
         let coredataManager = CoreDataManager()
         let articles = coredataManager.loadArticles(filter: category)
@@ -54,7 +51,6 @@ final class MainMenuPresenter: OutputMainMenu {
     }
 
     //MARK: Navigation
-
     func selectCategory(_ item: MainMenuItem) {
         presentArticles(category: item.articleCategory)
     }
@@ -64,7 +60,6 @@ final class MainMenuPresenter: OutputMainMenu {
     }
 
     //MARK: LoadData
-
     private func checkData() {
         guard let flagData = UserDefaults.standard.value(forKey: "saveData") as? Bool,
               let flagNotification = UserDefaults.standard.value(forKey: "saveNotification") as? Bool,
@@ -82,12 +77,10 @@ final class MainMenuPresenter: OutputMainMenu {
     }
 
     private func loadArticle() {
-
         let loadArticleService = LoadDataSevice<RemoteArticle>()
         let articleUrlString = "https://storage.yandexcloud.net/zavtra-v-lager/Articles.json"
 
         loadArticleService.fecthRemoteData(from: articleUrlString) { [weak self] articles, error in
-
             guard error != nil,
                   let error = error
             else {
@@ -103,7 +96,6 @@ final class MainMenuPresenter: OutputMainMenu {
     }
 
     private func loadNotification() {
-
         let loadNotificationService = LoadDataSevice<Notification>()
         let notificationUrlString = "https://storage.yandexcloud.net/zavtra-v-lager/Notifications.json"
 

@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Notification {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Notification> {
@@ -20,7 +19,6 @@ extension Notification {
     @NSManaged public var identifire: String?
     @NSManaged public var offsetTime: Int16
     @NSManaged public var title: String?
-
 }
 
 extension Notification : Identifiable {

@@ -10,7 +10,6 @@ import UIKit
 class TableViewController: UIViewController, InputTableView {
 
     //MARK: - Properties
-
     lazy private var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +36,6 @@ class TableViewController: UIViewController, InputTableView {
     var presenter: OutputTableView
 
     //MARK: - Life cicle
-
     init(presenter: OutputTableView) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -63,9 +61,7 @@ class TableViewController: UIViewController, InputTableView {
         searchBar.resignFirstResponder()
     }
 
-    //MARK: - Private
-    //MARK: UI
-
+    //MARK: - UI
     private func configureUI() {
         navigationController?.setNavigationBarHidden(false, animated: true)
         self.view.backgroundColor = .systemBackground
@@ -75,7 +71,6 @@ class TableViewController: UIViewController, InputTableView {
     }
 
     //MARK: Constraints
-
     private func setupConstraints() {
         let safeArea = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
@@ -91,7 +86,6 @@ class TableViewController: UIViewController, InputTableView {
     }
 
     //MARK: Setup properties
-
     private func setupTableView() {
         self.tableView.addGestureRecognizer(swipeGestureRecognizer)
         self.tableView.dataSource = self
@@ -133,7 +127,6 @@ extension TableViewController: UITableViewDataSource {
 //MARK: - TableView Delegate
 
 extension TableViewController: UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (view.frame.height / 10)
     }
@@ -146,7 +139,6 @@ extension TableViewController: UITableViewDelegate {
 //MARK: - SearchBar Delegate
 
 extension TableViewController: UISearchBarDelegate {
-
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }

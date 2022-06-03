@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ArticleCategory: Int16 {
+enum ArticleCategory: Int16, CaseIterable {
     case leader = 0
     case acquaintance = 1
     case activity = 3

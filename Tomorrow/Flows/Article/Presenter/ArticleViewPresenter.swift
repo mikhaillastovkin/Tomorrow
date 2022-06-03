@@ -5,7 +5,6 @@
 //  Created by Михаил Ластовкин on 10.03.2022.
 //
 
-import Foundation
 import UIKit
 
 protocol InputArticleViewController {
@@ -20,7 +19,6 @@ protocol OutputArticleViewController {
 }
 
 final class ArticleViewPresenter: OutputArticleViewController {
-
     var article: Article
     weak var inputView: (UIViewController & InputArticleViewController)? {
         didSet {

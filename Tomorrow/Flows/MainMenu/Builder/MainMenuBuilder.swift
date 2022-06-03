@@ -15,7 +15,6 @@ final class MainMenuBuilder{
 
     private func fillGames() -> [MainMenuItem] {
         var games: [MainMenuItem] = []
-
         games.append(MainMenuItem(
             title: "Для знакомства",
             subTitle: "Организационный \nпериод",
@@ -46,7 +45,6 @@ final class MainMenuBuilder{
 
     private func fillReading() -> [MainMenuItem] {
         var reading: [MainMenuItem] = []
-
         reading.append(MainMenuItem(
             title: "Возрастные особенности",
             subTitle: "Проблемы и решения",
@@ -82,13 +80,11 @@ final class MainMenuBuilder{
             subTitle: "Тексты и аккорды самых любимых лагерных песен",
             imageName: "songs",
             articleCategory: .songs))
-
         return reading
     }
 
     private func fillOther() -> [MainMenuItem] {
         var other: [MainMenuItem] = []
-
         other.append(MainMenuItem(
             title: "Что такое оргсбор",
             subTitle: "Начало перемен...",
@@ -124,13 +120,12 @@ final class MainMenuBuilder{
             subTitle: "Ответы на популярные вопросы",
             imageName: "faq",
             articleCategory: .faq))
-
         return other
     }
 
-    func buildMainMenu() -> (UIViewController & InputMainMenu) {
+    func buildMainMenu(coreDataManager: CoreDataManager) -> (UIViewController & InputMainMenu) {
         let items = fillData()
-        let presenter = MainMenuPresenter(items: items)
+        let presenter = MainMenuPresenter(items: items, coreDataManager: coreDataManager)
         let vc = MainMenuViewController(presenter: presenter)
         presenter.viewInput = vc
         return vc
