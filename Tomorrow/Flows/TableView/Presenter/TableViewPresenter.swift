@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 protocol InputTableView {
     var presenter: OutputTableView { get set}
@@ -56,5 +57,6 @@ final class TableViewPresenter: OutputTableView {
         else { return }
         let vc = ArticleViewBuilder().buildArticleViewController(with: selectArticle)
         viewInput?.navigationController?.pushViewController(vc, animated: true)
+        Analytics.logEvent("selectArticle", parameters: ["name" : selectArticle.title as Any])
     }
 }

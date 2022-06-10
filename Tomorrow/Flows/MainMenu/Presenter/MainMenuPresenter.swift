@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import FirebaseAnalytics
 
 protocol InputMainMenu {
     var presenter: OutputMainMenu { get set }
@@ -53,10 +54,12 @@ final class MainMenuPresenter: OutputMainMenu {
     //MARK: Navigation
     func selectCategory(_ item: MainMenuItem) {
         presentArticles(category: item.articleCategory)
+        Analytics.logEvent("selectCategory", parameters: [AnalyticsParameterContent : item.title])
     }
 
     func pressAllGamesButton() {
         presentArticles(category: .games)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [AnalyticsParameterValue : "pressAllGamesButton"])
     }
 
     //MARK: LoadData
