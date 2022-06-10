@@ -33,5 +33,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
+
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 }
 
